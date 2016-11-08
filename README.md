@@ -1,8 +1,5 @@
 # Blynk Server Docker Image
 
-[![](https://images.microbadger.com/badges/image/mpherg/blynk-server.svg)](http://microbadger.com/images/mpherg/blynk-server
-"Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/mpherg/blynk-server.svg)](http://microbadger.com/images/mpherg/blynk-server
-"Get your own version badge on microbadger.com")
 
 Runs your own [Blynk Server](https://github.com/blynkkk/blynk-server) in a Docker container instead of relying on Blynk's public server.
 
@@ -21,5 +18,12 @@ To persist data, mount a directory into the container:
 ```sh
 docker run -p 7443:7443 -p 8443:8443 -v $(PWD):/data mpherg/blynk-server:latest
 ```
+You can optionally setup your own server.properties file, I have things setup to look in the config volume. Please note that blynk does not support the config file being in the data folder (good security measure). So if your data folder is /blynk/data you cant have the config file in /blynk/data/server.properties. 
+
+```sh
+docker run -p 7443:7443 -p 8443:8443 -v /someotherlocation/blynkdata:/data mpherg/blynk-server:latest -v /somelocation/config:/config
+```
 
 Or you can use a data volume in another container (check out different data volume techniques [here](https://docs.docker.com/engine/tutorials/dockervolumes/)).
+
+Thanks to [mpherg](https://github.com/mpherg) for his initial design I forked from. 
