@@ -24,4 +24,4 @@ RUN ln -s /config/server.properties /blynk/server.properties
 EXPOSE 7443 8080 8081 8082 8441 8442 8443 9443
 WORKDIR /data
 VOLUME /config
-ENTRYPOINT ["java", "-jar", "/blynk/server.jar", "-dataFolder", "/data", "-serverConfig", "/config/server.properties"]
+ENTRYPOINT ["java", "-jar", "/blynk/server.jar", "-dataFolder", "/data"]
