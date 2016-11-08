@@ -1,5 +1,5 @@
 FROM java:8-jre
-MAINTAINER Michael Ferguson <mpherg@gmail.com>
+MAINTAINER Richard Ahlquist <rahlquist@gmail.com>
 
 ENV BLYNK_SERVER_VERSION 0.19.0
 RUN mkdir /blynk
@@ -7,8 +7,10 @@ RUN curl -L https://github.com/blynkkk/blynk-server/releases/download/v${BLYNK_S
 
 # Create data folder. To persist data, map a volume to /data
 RUN mkdir /data
-# Place symbolic link to server config file so that this can be persisted in /data
-RUN ln -s /data/server.properties /blynk/server.properties
+# Create config folder. To persist config, map a volume to /config
+RUN mkdir /config
+# Place symbolic link to server config file so that this can be persisted in /config
+RUN ln -s /config/server.properties /config/server.properties
 
 # IP port listing:
 # 8443: Application mutual ssl/tls port
@@ -21,4 +23,5 @@ RUN ln -s /data/server.properties /blynk/server.properties
 # 7443: Administration UI HTTPS port
 EXPOSE 7443 8080 8081 8082 8441 8442 8443 9443
 WORKDIR /data
-ENTRYPOINT ["java", "-jar", "/blynk/server.jar", "-dataFolder", "/data"]
+VOLUME /config
+ENTRYPOINT ["java", "-jar", "/blynk/server.jar", "-dataFolder", "/data", "-serverConfig", "/config/server.properties"]
