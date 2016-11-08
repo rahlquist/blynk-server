@@ -10,7 +10,7 @@ RUN mkdir /data
 # Create config folder. To persist config, map a volume to /config
 RUN mkdir /config
 # Place symbolic link to server config file so that this can be persisted in /config
-RUN ln -s /config/server.properties /blynk/server.properties
+RUN ln -s /data/server.properties /blynk/server.properties
 
 # IP port listing:
 # 8443: Application mutual ssl/tls port
