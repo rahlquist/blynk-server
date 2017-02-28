@@ -1,14 +1,14 @@
 FROM java:8-jre
 MAINTAINER Richard Ahlquist <rahlquist@gmail.com>
 
-ENV BLYNK_SERVER_VERSION 0.22.0
+ENV BLYNK_SERVER_VERSION 0.22.3
 RUN mkdir /blynk
 RUN curl -L https://github.com/blynkkk/blynk-server/releases/download/v${BLYNK_SERVER_VERSION}/server-${BLYNK_SERVER_VERSION}.jar > /blynk/server.jar
 
 # Create data folder. To persist data, map a volume to /data
 RUN mkdir /data
 # Create config folder. To persist config, map a volume to /config
-RUN mkdir /config
+# RUN mkdir /config
 # Place symbolic link to server config file so that this can be persisted in /config
 RUN ln -s /config/server.properties /blynk/server.properties
 # Modification to work with letsencrypt SSL based on https://github.com/blynkkk/blynk-server#generate-lets-encrypt-ssltls-certificates
@@ -27,4 +27,4 @@ EXPOSE 7443 8080 8081 8082 8441 8442 8443 9443
 WORKDIR /data
 VOLUME /config
 VOLUME /srv/blynk-data
-ENTRYPOINT ["java", "-jar", "/blynk/server.jar", "-dataFolder", "/data", "-serverConfig", "/config/server.properties", "-mailConfig", "/config/mail.properties"]
+ENTRYPOINT ["java", "-jar", "/blynk/server.jar", "-dataFolder", "/data", "-mailConfig", "/config/mail.properties"]
