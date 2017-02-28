@@ -11,6 +11,7 @@ RUN mkdir /data
 # RUN mkdir /config
 # Place symbolic link to server config file so that this can be persisted in /config
 RUN ln -s /config/server.properties /blynk/server.properties
+RUN ln -s /config/mail.properties /blynk/mail.properties
 # Modification to work with letsencrypt SSL based on https://github.com/blynkkk/blynk-server#generate-lets-encrypt-ssltls-certificates
 RUN mkdir /srv/blynk-data
 
@@ -27,4 +28,4 @@ EXPOSE 7443 8080 8081 8082 8441 8442 8443 9443
 WORKDIR /data
 VOLUME /config
 VOLUME /srv/blynk-data
-ENTRYPOINT ["java", "-jar", "/blynk/server.jar", "-dataFolder", "/data", "-mailConfig", "/config/mail.properties"]
+ENTRYPOINT ["java", "-jar", "/blynk/server.jar", "-dataFolder", "/data"]
