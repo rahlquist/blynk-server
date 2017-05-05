@@ -1,7 +1,7 @@
 FROM java:8-jre
 MAINTAINER Richard Ahlquist <rahlquist@gmail.com>
 
-ENV BLYNK_SERVER_VERSION 0.22.3
+ENV BLYNK_SERVER_VERSION 0.23.5
 RUN mkdir /blynk
 RUN curl -L https://github.com/blynkkk/blynk-server/releases/download/v${BLYNK_SERVER_VERSION}/server-${BLYNK_SERVER_VERSION}.jar > /blynk/server.jar
 
@@ -14,6 +14,7 @@ RUN ln -s /config/server.properties /blynk/server.properties
 RUN ln -s /config/mail.properties /blynk/mail.properties
 # Modification to work with letsencrypt SSL based on https://github.com/blynkkk/blynk-server#generate-lets-encrypt-ssltls-certificates
 RUN mkdir /srv/blynk-data
+RUN mkdir /etc/letsencrypt
 
 # IP port listing:
 # 8443: Application mutual ssl/tls port
@@ -28,4 +29,5 @@ EXPOSE 7443 8080 8081 8082 8441 8442 8443 9443
 WORKDIR /data
 VOLUME /config
 VOLUME /srv/blynk-data
+VOLUME /etc/letsencrypt
 ENTRYPOINT ["java", "-jar", "/blynk/server.jar", "-dataFolder", "/data"]
