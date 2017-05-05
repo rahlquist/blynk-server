@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+        datastore:
+          build: .
+          restart: always
+          volumes:
+            - /home/htpcuser/Plex:/home/htpcuser/Plex
+            - /home/htpcuser/.htpc-suite/shared:/shared
+        blynk:
+          image: rahlquist/blynk-server
+          restart: always
+          volumes:
+            - /home/htpcuser/.htpc-suite/blynk:/data
+            - /home/htpcuser/.htpc-suite/blynk/config:/config
+            - /etc/letsencrypt:/etc/letsencrypt
+            - /srv/blynk-data:/srv/blynk-data
+          volumes_from:
+            - datastore
+          ports:
+            - "192.168.0.9:7443:7443"
+            - "192.168.0.9:8080:8080"
+            - "192.168.0.9:8081:8081"
+            - "192.168.0.9:8082:8082"
+            - "192.168.0.9:8441:8441"
+            - "192.168.0.9:8442:8442"
+            - "192.168.0.9:8443:8443"
+            - "192.168.0.9:9443:9443"
